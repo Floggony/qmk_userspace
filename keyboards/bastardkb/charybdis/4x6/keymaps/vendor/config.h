@@ -21,6 +21,9 @@
 #    define DYNAMIC_KEYMAP_LAYER_COUNT 4
 #endif // VIA_ENABLE
 
+#define VIA_EXPECTED_VERSION 0x000c // Форсирует протокол v12 (0x000c = 12)
+#define VIA_EXPECTED_VERSION 0x000c // Форсирует протокол v12 (0x000c = 12)
+
 #ifndef __arm__
 /* Disable unused features. */
 #    define NO_ACTION_ONESHOT
