@@ -16,6 +16,15 @@
  */
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    QMK_LANG_SWITCH = SAFE_RANGE, // Смена языка (Ctrl + Shift)
+    QMK_TEXT_PASSWORD,             // Ввод пароля (!Abyss78407840)
+    QMK_CLOSE_TAB,                 // Закрытие вкладки (Ctrl + W)
+    QMK_DESKTOP_LEFT,              // Виртуальный рабочий стол влево (Ctrl + Win + Left)
+    QMK_DESKTOP_RIGHT,             // Виртуальный рабочий стол вправо (Ctrl + Win + Right)
+    QMK_UNDO                       // Отмена действия (Ctrl + Z)
+};
+
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -156,4 +165,82 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // 1. Смена языка (Ctrl + Shift)
+        case QMK_LANG_SWITCH:
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+                register_code(KC_LSHIFT);
+            } else {
+                unregister_code(KC_LSHIFT);
+                unregister_code(KC_LCTRL);
+            }
+            return false;
+
+        // 2. Ввод текста-пароля
+        case QMK_TEXT_PASSWORD:
+            if (record->event.pressed) {
+                SEND_STRING("!Abyss78407840");
+            }
+            return false;
+
+        // 3. Закрытие вкладки (Ctrl + W)
+        case QMK_CLOSE_TAB:
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+                register_code(KC_W);
+            } else {
+                unregister_code(KC_W);
+                unregister_code(KC_LCTRL);
+            }
+            return false;
+
+        // 4. Рабочий стол влево (Ctrl + Win + Left)
+        case QMK_DESKTOP_LEFT:
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+                register_code(KC_LGUI);
+                register_code(KC_LEFT);
+            } else {
+                unregister_code(KC_LEFT);
+                unregister_code(KC_LGUI);
+                unregister_code(KC_LCTRL);
+            }
+            return false;
+
+        // 5. Рабочий стол вправо (Ctrl + Win + Right)
+        case QMK_DESKTOP_RIGHT:
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+                register_code(KC_LGUI);
+                register_code(KC_RGHT);
+            } else {
+                unregister_code(KC_RGHT);
+                unregister_code(KC_LGUI);
+                unregister_code(KC_LCTRL);
+            }
+            return false;
+
+        // 6. Отмена действия (Ctrl + Z)
+        case QMK_UNDO:
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+                register_code(KC_Z);
+            } else {
+                unregister_code(KC_Z);
+                unregister_code(KC_LCTRL);
+            }
+            return false;
+    }
+    return true; // Пропускаем все остальные стандартные клавиши через VIA
+}
+
+
+
+
+
+
+
 #endif
