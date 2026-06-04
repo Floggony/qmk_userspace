@@ -173,11 +173,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // 1. Смена языка (Ctrl + Shift)
         case QMK_LANG_SWITCH:
             if (record->event.pressed) {
-                register_code(KC_LCTRL);
-                register_code(KC_LSHIFT);
+                register_code(KC_LCTL);
+                register_code(KC_LSFT);
             } else {
-                unregister_code(KC_LSHIFT);
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LCTL);
             }
             return false;
 
@@ -191,55 +191,53 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // 3. Закрытие вкладки (Ctrl + W)
         case QMK_CLOSE_TAB:
             if (record->event.pressed) {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
                 register_code(KC_W);
             } else {
                 unregister_code(KC_W);
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
             }
             return false;
 
         // 4. Рабочий стол влево (Ctrl + Win + Left)
         case QMK_DESKTOP_LEFT:
             if (record->event.pressed) {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
                 register_code(KC_LGUI);
                 register_code(KC_LEFT);
             } else {
                 unregister_code(KC_LEFT);
                 unregister_code(KC_LGUI);
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
             }
             return false;
 
         // 5. Рабочий стол вправо (Ctrl + Win + Right)
         case QMK_DESKTOP_RIGHT:
             if (record->event.pressed) {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
                 register_code(KC_LGUI);
-                register_code(KC_RGHT);
+                register_code(KC_RIGHT);
             } else {
-                unregister_code(KC_RGHT);
+                unregister_code(KC_RIGHT);
                 unregister_code(KC_LGUI);
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
             }
             return false;
 
         // 6. Отмена действия (Ctrl + Z)
         case QMK_UNDO:
             if (record->event.pressed) {
-                register_code(KC_LCTRL);
+                register_code(KC_LCTL);
                 register_code(KC_Z);
             } else {
                 unregister_code(KC_Z);
-                unregister_code(KC_LCTRL);
+                unregister_code(KC_LCTL);
             }
             return false;
     }
-    return true; // Пропускаем все остальные стандартные клавиши через VIA
+    return true; // Пропускаем остальные стандартные клавиши через VIA
 }
-
-
 
 
 
