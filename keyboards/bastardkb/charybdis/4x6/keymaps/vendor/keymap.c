@@ -165,6 +165,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
+#endif
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -241,6 +243,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 
-
-
-#endif
